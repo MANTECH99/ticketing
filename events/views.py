@@ -20,6 +20,8 @@ def rapport(request):
 from .models import TicketType, Ticket, Reservation, Event
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
+from tickets.pdf_utils import generate_ticket_pdf
+
 
 @login_required
 def reserver_ticket(request, event_id):
