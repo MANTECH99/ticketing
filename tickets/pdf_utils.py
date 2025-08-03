@@ -11,8 +11,11 @@ def generate_ticket_pdf(ticket):
         return None
 
     try:
-        # Générer l'URL complète à partir du public_id stocké dans ticket.qr_code (string)
-        qr_url, _ = cloudinary_url(ticket.qr_code)
+        # Convertir en string pour avoir le public_id
+        public_id = str(ticket.qr_code)
+
+        # Générer l'URL complète à partir du public_id
+        qr_url, _ = cloudinary_url(public_id)
 
         print("QR Code URL:", qr_url)  # debug
 
