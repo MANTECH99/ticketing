@@ -68,7 +68,7 @@ def reserver_ticket(request, event_id):
 
         # Limite si le type de ticket est gratuit
         if selected_type.price == 0:
-            max_per_user = 10  # Ajuste cette limite si besoin
+            max_per_user = 100  # Ajuste cette limite si besoin
             if total_reserved_by_user + quantity > max_per_user:
                 return render(request, 'events/reserver_ticket.html', {
                     'event': event,
