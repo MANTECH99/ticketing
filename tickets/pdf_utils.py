@@ -3,28 +3,34 @@ from xhtml2pdf import pisa
 from io import BytesIO
 import base64
 import requests
-import base64
-import requests
-from django.template.loader import render_to_string
-from xhtml2pdf import pisa
-from io import BytesIO
 
 def generate_ticket_pdf(ticket):
-    if not ticket.qr_code:
+    if not ticket.qr_code or not ticket.qr_code.url:
         return None
 
-    # On lit directement à partir du fichier associé à Cloudinary
-    qr_file = ticket.qr_code
-    encoded_string = base64.b64encode(qr_file.read()).decode()
+    print("QR Code URL:", ticket.qr_code.url)  # 👈 Ajout ici pour debug
 
-    html_string = render_to_string('tickets/ticket_pdf.html', {
-        'ticket': ticket,
-        'qr_base64': encoded_string,
-    })
+    try:
+        # Télécharger l'image depuis l'URL Cloudinary
+        response = requests.get(ticket.qr_code.url)
+        response.raise_for_status()  # En cas d'erreur HTTP
 
-    pdf_file = BytesIO()
-    pisa_status = pisa.CreatePDF(src=html_string, dest=pdf_file)
-    if pisa_status.err:
+        encoded_string = base64.b64encode(response.content).decode()
+
+        html_string = render_to_string('tickets/ticket_pdf.html', {
+            'ticket': ticket,
+            'qr_base64': encoded_string,
+        })
+
+        pdf_file = BytesIO()
+        pisa_status = pisa.CreatePDF(src=html_string, dest=pdf_file)
+
+        if pisa_status.err:
+            print("[ERREUR PDF] La génération du PDF a échoué")
+            return None
+
+        return pdf_file.getvalue()
+
+    except Exception as e:
+        print("[ERREUR PDF] Exception :", e)
         return None
-    return pdf_file.getvalue()
-
