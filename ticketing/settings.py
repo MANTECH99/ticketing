@@ -183,3 +183,23 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
+
+INSTALLED_APPS += [
+    'cloudinary',
+    'cloudinary_storage',
+]
+
+# Utiliser Cloudinary pour les fichiers média
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dpcsllhpt',
+    'API_KEY': '823342412345164',
+    'API_SECRET': 'umlPt3Q4aj4yjq-Zs_Rl9EiiOL8',  # Remplace par la vraie valeur
+}
+
+MEDIA_URL = 'https://res.cloudinary.com/dpcsllhpt/'
+
