@@ -12,6 +12,9 @@ tzdata==2025.1
 whitenoise==6.9.0
 cryptography>=42.0.0
 xhtml2pdf
+qrcode
+
+
 
 
 
