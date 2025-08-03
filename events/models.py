@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
+
 
 class Event(models.Model):
     EVENT_TYPES = [
@@ -13,7 +15,7 @@ class Event(models.Model):
     date = models.DateTimeField()
     location = models.CharField(max_length=255)
     total_tickets = models.PositiveIntegerField()
-    image = models.ImageField(upload_to='event_images/', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
     type = models.CharField(max_length=20, choices=EVENT_TYPES, default='autre')
 
     @property
