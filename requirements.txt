@@ -15,6 +15,9 @@ xhtml2pdf
 qrcode
 cloudinary
 django-cloudinary-storage
+requests>=2.0
+
+
 
 
 
