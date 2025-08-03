@@ -103,6 +103,7 @@ def reserver_ticket(request, event_id):
         
                 # Étape 2 : Générer le QR code
                 qr_image_file = generate_qr_code(ticket)
+                print("qr_image_file:", qr_image_file, type(qr_image_file))
                 if not qr_image_file:
                     # Gérer l'erreur ou afficher un message d'erreur
                     return render(request, 'events/reserver_ticket.html', {
