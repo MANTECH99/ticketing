@@ -2,106 +2,26 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Ticket</title>
-    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
     <style>
-        @page { size: A4; margin: 0; }
-        body {
-            font-family: 'Staatliches', cursive;
-            background: #d83565;
-            margin: 0;
-            padding: 30px;
-        }
-
-        .ticket {
-            display: flex;
-            background: white;
-            width: 800px;
-            margin: auto;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        .left {
-            display: flex;
-        }
-
-        .image {
-            height: 250px;
-            width: 250px;
-background-image: url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3');
-
-
-
-            background-size: cover;
-        }
-
-        .ticket-info {
-            padding: 15px;
-            width: 300px;
-            text-align: center;
-        }
-
-        .show-name h1 {
-            font-size: 28px;
-            color: #4a437e;
-        }
-
-        .show-name h2 {
-            font-family: 'Nanum Pen Script', cursive;
-            font-size: 24px;
-            color: #d83565;
-        }
-
-        .time, .date, .location {
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .qr {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .qr img {
-            width: 120px;
-        }
-
-        .right {
-            width: 200px;
-            padding: 10px;
-            border-left: 1px dashed #ccc;
-            text-align: center;
-        }
+        body { font-family: sans-serif; }
+        .container { text-align: center; margin: 40px; }
+        .qr { margin-top: 20px; }
     </style>
 </head>
 <body>
-    <div class="ticket">
-        <div class="left">
-            <div class="image"></div>
-            <div class="ticket-info">
-                <div class="date">
-                    <strong>{{ ticket.reservation.event.date|date:"l d F Y H:i" }}</strong>
-                </div>
-                <div class="show-name">
-                    <h1>{{ ticket.reservation.event.title }}</h1>
-                    <h2>{{ ticket.reservation.user.first_name }} {{ ticket.reservation.user.last_name }}</h2>
-                </div>
-                <div class="time">
-                    <p>Numéro du ticket : #{{ ticket.id }}</p>
-                    <p>Validé : {% if ticket.used %}✅ Oui{% else %}❌ Non{% endif %}</p>
-                </div>
-                <div class="location">
-                    <p>{{ ticket.reservation.event.location }}</p>
-                </div>
-            </div>
+    <div class="container">
+        <h2>🎫 Ticket d'événement</h2>
+        <p><strong>Événement :</strong> {{ ticket.reservation.event.title }}</p>
+        <p><strong>Date :</strong> {{ ticket.reservation.event.date|date:"d/m/Y H:i" }}</p>
+        <p><strong>Lieu :</strong> {{ ticket.reservation.event.location }}</p>
+        <p><strong>Nom :</strong> {{ ticket.reservation.user.first_name }} {{ ticket.reservation.user.last_name }}</p>
+            <p><strong>Numéro du ticket :</strong> #{{ ticket.id }}</p>
+                   <p><strong>Ticket validé :</strong> {% if ticket.used %}✅ Oui{% else %}❌ Non{% endif %}</p>
+
+        <div class="qr">
+            <img src="data:image/png;base64,{{ qr_base64 }}" width="200" />
         </div>
-        <div class="right">
-            <div class="qr">
-                <img src="data:image/png;base64,{{ qr_base64 }}" />
-            </div>
-            <p>À présenter à l’entrée</p>
-        </div>
+        <p>À présenter à l’entrée</p>
     </div>
 </body>
 </html>
