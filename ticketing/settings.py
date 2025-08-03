@@ -144,9 +144,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEXCHANGE_API_KEY  = 'API-CU-KSZUADM-TQ9-XXV-DN'
 DEXCHANGE_API_URL = 'https://api-m.dexchange.sn/api/v1/transaction/init'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '76ffb1ac26c8.ngrok-free.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ticketing-production-20dc.up.railway.app']
 CSRF_TRUSTED_ORIGINS = [
-    'https://76ffb1ac26c8.ngrok-free.app',
+    'https://ticketing-production-20dc.up.railway.app',
 ]
 
 LOGGING = {
