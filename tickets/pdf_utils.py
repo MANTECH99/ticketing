@@ -3,17 +3,22 @@ from xhtml2pdf import pisa
 from io import BytesIO
 import base64
 import requests
+from cloudinary.utils import cloudinary_url
 
 def generate_ticket_pdf(ticket):
-    if not ticket.qr_code or not ticket.qr_code.url:
+    if not ticket.qr_code:
+        print("Pas de QR code.")
         return None
 
-    print("QR Code URL:", ticket.qr_code.url)  # 👈 Ajout ici pour debug
-
     try:
-        # Télécharger l'image depuis l'URL Cloudinary
-        response = requests.get(ticket.qr_code.url)
-        response.raise_for_status()  # En cas d'erreur HTTP
+        # Générer l'URL complète à partir du public_id stocké dans ticket.qr_code (string)
+        qr_url, _ = cloudinary_url(ticket.qr_code)
+
+        print("QR Code URL:", qr_url)  # debug
+
+        # Télécharger l'image depuis Cloudinary
+        response = requests.get(qr_url)
+        response.raise_for_status()
 
         encoded_string = base64.b64encode(response.content).decode()
 
