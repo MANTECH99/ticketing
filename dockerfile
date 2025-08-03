@@ -1,8 +1,8 @@
-FROM python:3.12-slim
+FROM python:3.12-bullseye
 
 WORKDIR /app
 
-# Installer les dépendances système pour mysqlclient ET WeasyPrint
+# Installer les dépendances système nécessaires à mysqlclient ET WeasyPrint
 RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     build-essential \
@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN python -m venv /opt/venv && . /opt/venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt
 
-# Copier le code
+# Copier le reste du code
 COPY . .
 
 # Collecte des fichiers statiques et migrations
