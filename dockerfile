@@ -1,8 +1,8 @@
-FROM python:3.12
+FROM python:3.12-slim
 
 WORKDIR /app
 
-# Installer les dépendances système nécessaires à mysqlclient et WeasyPrint
+# Installer les dépendances système pour mysqlclient ET WeasyPrint
 RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     build-essential \
@@ -17,20 +17,20 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     libglib2.0-0 \
     libgobject-2.0-0 \
-    curl \
+    libgobject-2.0-dev \
     python3-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Créer l’environnement virtuel et installer les dépendances Python
+# Configurer l’environnement virtuel
 COPY requirements.txt .
 RUN python -m venv /opt/venv && . /opt/venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt
 
-# Copier le reste du code
+# Copier le code
 COPY . .
 
 # Collecte des fichiers statiques et migrations
 RUN . /opt/venv/bin/activate && python manage.py collectstatic --noinput && python manage.py migrate
 
-# Commande de démarrage
-
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ticketing.wsgi:application"]
+# Lancer gunicorn
+CMD ["/opt/venv/bin/gunicorn", "--bind", "0.0.0.0:8000", "ticketing.wsgi:application"]
