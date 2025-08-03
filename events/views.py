@@ -100,7 +100,7 @@ def reserver_ticket(request, event_id):
             for _ in range(reservation.quantity):
                 # Étape 1 : Créer le ticket sans QR code
                 ticket = Ticket.objects.create(reservation=reservation, ticket_type=selected_type)
-        
+                ticket.save() 
                 # Étape 2 : Générer le QR code
                 qr_image_file = generate_qr_code(ticket)
                 print("qr_image_file:", qr_image_file, type(qr_image_file))
