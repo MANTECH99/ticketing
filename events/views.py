@@ -100,7 +100,6 @@ def reserver_ticket(request, event_id):
             for _ in range(reservation.quantity):
                 # Étape 1 : Créer le ticket sans QR code
                 ticket = Ticket.objects.create(reservation=reservation, ticket_type=selected_type)
-                ticket.save() 
                 # Étape 2 : Générer le QR code
                 qr_image_file = generate_qr_code(ticket)
                 print("qr_image_file:", qr_image_file, type(qr_image_file))
@@ -112,8 +111,12 @@ def reserver_ticket(request, event_id):
                         'error': "Erreur lors de la génération du QR code."
                     })
         
-                # Étape 3 : Sauvegarder le QR dans le champ `qr_code` (Cloudinary)
-                ticket.qr_code.save(f"qr_ticket_{ticket.id}.png", qr_image_file)
+                # Étape 3 : Uploader sur Cloudinary
+                import cloudinary.uploader
+                upload_result = cloudinary.uploader.upload(qr_image_file, folder='qr_codes')
+                
+                # Étape 4 : Mettre à jour le champ CloudinaryField avec le public_id
+                ticket.qr_code = upload_result['public_id']
                 ticket.save()
         
                 # Étape 4 : Générer le PDF (à partir du ticket qui a maintenant un QR)
