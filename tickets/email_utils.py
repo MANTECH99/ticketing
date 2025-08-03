@@ -1,11 +1,10 @@
 from django.core.mail import EmailMessage
 
-from tickets.pdf_utils import generate_ticket_pdf
+def send_ticket_email(ticket, pdf_data):
+    from django.core.mail import EmailMessage
 
-
-def send_ticket_email(ticket):
     print(f"[EMAIL] Envoi de l'email pour {ticket}")
-    pdf_data = generate_ticket_pdf(ticket)
+
     if pdf_data is None:
         print("Erreur génération PDF")
         return False
@@ -19,5 +18,6 @@ def send_ticket_email(ticket):
     email.attach(f'ticket_{ticket.id}.pdf', pdf_data, 'application/pdf')
     email.send()
     return True
+
 
 
