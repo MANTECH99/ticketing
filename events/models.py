@@ -68,7 +68,7 @@ class Ticket(models.Model):
     reservation = models.ForeignKey('Reservation', on_delete=models.CASCADE)
     ticket_type = models.ForeignKey(TicketType, on_delete=models.CASCADE)
 
-    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+    qr_code = CloudinaryField('qr_code', blank=True, null=True)
     used = models.BooleanField(default=False)
 
     def __str__(self):
