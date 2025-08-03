@@ -7,8 +7,4 @@ def generate_qr_code(ticket):
     qr = qrcode.make(data)
     buffer = BytesIO()
     qr.save(buffer, format='PNG')
-    file = ContentFile(buffer.getvalue(), name=f"qr_ticket_{ticket.id}.png")
-
-    # Sauvegarde dans le champ qr_code → envoie vers Cloudinary
-    ticket.qr_code.save(file.name, file)
-    ticket.save()
+    return ContentFile(buffer.getvalue(), name=f"qr_ticket_{ticket.id}.png")
