@@ -5,9 +5,9 @@ import base64
 
 def generate_ticket_pdf(ticket):
     # Lire le QR code en base64 pour l'inclure dans le HTML
-    qr_path = ticket.qr_code.path
-    with open(qr_path, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read()).decode()
+    # Lire le contenu du fichier depuis Cloudinary (ou local)
+    qr_file = ticket.qr_code
+    encoded_string = base64.b64encode(qr_file.read()).decode()
 
     html_string = render_to_string('tickets/ticket_pdf.html', {
         'ticket': ticket,
