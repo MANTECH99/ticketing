@@ -11,6 +11,7 @@ typing_extensions==4.12.2
 tzdata==2025.1
 whitenoise==6.9.0
 cryptography>=42.0.0
-weasyprint==61.2
+xhtml2pdf
+
 
 
