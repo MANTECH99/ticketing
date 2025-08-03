@@ -96,10 +96,21 @@ def reserver_ticket(request, event_id):
         # Si le type de ticket est gratuit, générer directement les tickets
         if selected_type.price == 0:
             for _ in range(reservation.quantity):
+                # Étape 1 : Créer le ticket sans QR code
                 ticket = Ticket.objects.create(reservation=reservation, ticket_type=selected_type)
-                ticket.qr_code.save(f"qr_{ticket.id}.png", generate_qr_code(ticket))
+        
+                # Étape 2 : Générer le QR code
+                qr_image_file = generate_qr_code(ticket)
+        
+                # Étape 3 : Sauvegarder le QR dans le champ `qr_code` (Cloudinary)
+                ticket.qr_code.save(f"qr_ticket_{ticket.id}.png", qr_image_file)
                 ticket.save()
-                send_ticket_email(ticket)
+        
+                # Étape 4 : Générer le PDF (à partir du ticket qui a maintenant un QR)
+                pdf_bytes = generate_ticket_pdf(ticket)
+        
+                # Étape 5 : Envoyer l'email avec pièce jointe PDF
+                send_ticket_email(ticket, pdf_bytes)
 
         # Redirection vers une page de confirmation
         return redirect('confirmation_reservation', reservation.id)
