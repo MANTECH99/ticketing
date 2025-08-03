@@ -91,11 +91,9 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv("MYSQL_PUBLIC_URL", "mysql://root:BztDqOOnNGjXZQrQbprcGWopYraiarKz@mysql.railway.internal:3306/railway")
+        default=os.getenv("MYSQL_PUBLIC_URL", "mysql://root:JbARffLeRQwFEKVXajfFgFlxDuaKPyKH@caboose.proxy.rlwy.net:14192/railway")
     )
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -146,9 +144,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEXCHANGE_API_KEY  = 'API-CU-KSZUADM-TQ9-XXV-DN'
 DEXCHANGE_API_URL = 'https://api-m.dexchange.sn/api/v1/transaction/init'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '19dacf9b9c22.ngrok-free.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '76ffb1ac26c8.ngrok-free.app']
 CSRF_TRUSTED_ORIGINS = [
-    'https://19dacf9b9c22.ngrok-free.app',
+    'https://76ffb1ac26c8.ngrok-free.app',
 ]
 
 LOGGING = {
