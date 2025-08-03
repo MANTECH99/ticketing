@@ -1,0 +1,39 @@
+<!-- templates/dashboard.html -->
+{% extends 'base.html' %}
+
+{% load form_tags %}
+
+{% block title %}Modifier l'événement{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-center">Modifier l'événement : <strong>{{ event.title }}</strong></h4>
+
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          {% for field in form %}
+            <div class="form-group">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field|add_class:"form-control" }}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+              {% for error in field.errors %}
+                <div class="text-danger">{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+
+          <button type="submit" class="btn btn-success mr-2">Enregistrer les modifications</button>
+          <a href="{% url 'dashboard_admin' %}" class="btn btn-secondary">Annuler</a>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

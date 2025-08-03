@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Scanner un ticket{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+  }
+
+  .scanner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* pour coller en haut sur mobile */
+    padding: 10px;
+    min-height: 100vh;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  #reader {
+    width: 95vw;
+    max-width: 600px;
+    height: 95vw;
+    max-height: 600px;
+    border: 2px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  }
+
+  @media (max-width: 600px) {
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    #reader {
+      width: 90vw;
+      height: 90vw;
+      border-width: 1.5px;
+      border-radius: 10px;
+      box-shadow: none;
+    }
+  }
+</style>
+
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+<div class="scanner-container">
+  <h2>Scanner un ticket</h2>
+  <div id="reader"></div>
+</div>
+
+<script>
+  const scanner = new Html5Qrcode("reader");
+
+  function onScanSuccess(decodedText, decodedResult) {
+      console.log("✅ Code détecté :", decodedText);
+      scanner.stop().then(() => {
+          window.location.href = decodedText;
+      }).catch(err => {
+          console.error("Erreur lors de l'arrêt du scanner :", err);
+      });
+  }
+
+  function onScanFailure(error) {
+      // Ignorer ou afficher erreur si nécessaire
+  }
+
+  scanner.start(
+      { facingMode: "environment" },
+      {
+          fps: 10,
+          qrbox: 250
+      },
+      onScanSuccess,
+      onScanFailure
+  ).catch(err => {
+      console.error("Erreur au démarrage du scanner :", err);
+  });
+</script>
+{% endblock %}

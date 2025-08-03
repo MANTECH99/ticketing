@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Validation du ticket</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        .valide { color: green; }
+        .invalide { color: red; }
+    </style>
+</head>
+<body>
+    <h2 class="{{ statut }}">{{ message }}</h2>
+
+    <p>Ticket n° {{ ticket.id }}</p>
+    <p>Événement : {{ ticket.reservation.event.title }}</p>
+    <p>Date : {{ ticket.reservation.event.date }}</p>
+</body>
+</html>

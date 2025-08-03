@@ -1,0 +1,35 @@
+<!-- templates/dashboard.html -->
+{% extends 'base.html' %}
+
+{% load form_tags %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-center">Ajouter un type de ticket pour <strong>{{ event.title }}</strong></h4>
+
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="id_name">Nom du ticket</label>
+            {{ form.name|add_class:"form-control" }}
+          </div>
+
+          <div class="form-group">
+            <label for="id_price">Prix</label>
+            {{ form.price|add_class:"form-control" }}
+          </div>
+
+          <button type="submit" class="btn btn-primary mr-2">Ajouter</button>
+          <a href="{% url 'dashboard_admin' %}" class="btn btn-light">Annuler</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

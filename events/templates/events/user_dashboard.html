@@ -1,0 +1,629 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Man tech </title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;400;700&display=swap" rel="stylesheet">
+<!-- CSS FILES -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+<link href="{% static 'css/templatemo-festava-live.css' %}" rel="stylesheet">
+    <style>.box {
+  border-radius: 20px;
+  transition: transform 0.2s ease;
+}
+.box:hover {
+  transform: translateY(-5px);
+}
+.detail-box h5 {
+  font-size: 1.2rem;
+}</style>
+
+
+    <!--
+
+TemplateMo 583 Festava Live
+
+https://templatemo.com/tm-583-festava-live
+
+-->
+</head>
+
+<body>
+
+    <main>
+
+        <header class="site-header">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12 col-12 d-flex flex-wrap">
+                        <p class="d-flex me-4 mb-0">
+                            <i class="bi-person custom-icon me-2"></i>
+                            <strong class="text-dark">Bienvenue sur le site officiel de Réservation</strong>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="">
+                   Billetterie Express
+                </a>
+
+
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_1">Accueil</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_2">A propos de nous</a>
+                        </li>
+
+                                            <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_3">Evénements</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_4">Nos artistes</a>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_6">Contact</a>
+                        </li>
+                                                  {% if request.user.is_authenticated %}
+
+                                                                                                                                                            <li class="nav-item">
+                                  <a href="{% url 'mon_compte' %}" class="text-white">Mon compte</a>
+                        </li>
+<li class="nav-item">
+  <a href="{% url 'logout' %}" class="nav-link" title="Déconnexion">
+    <i class="bi bi-box-arrow-right"></i>
+  </a>
+</li>
+
+
+                             {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <section class="hero-section" id="section_1">
+            <div class="section-overlay"></div>
+
+            <div class="container d-flex justify-content-center align-items-center">
+                <div class="row">
+
+                    <div class="col-12 mt-auto mb-5 text-center">
+                        <small>@MAN_TECH Presents</small>
+
+                        <h1 class="text-white mb-5">Billetterie Express</h1>
+
+                        <a class="btn custom-btn smoothscroll" href="#section_2">Let's begin</a>
+                    </div>
+
+                    <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
+                        <div class="date-wrap">
+                            <h5 class="text-white">
+                                <i class="custom-icon bi-clock me-2"></i>
+                                01 - 08<sup>th</sup>, Aout 2025
+                            </h5>
+                        </div>
+
+                        <div class="location-wrap mx-auto py-3 py-lg-0">
+                            <h5 class="text-white">
+                                <i class="custom-icon bi-geo-alt me-2"></i>
+                                Mboro, Thiés, Sénégal
+                            </h5>
+                        </div>
+
+                        <div class="social-share">
+                            <ul class="social-icon d-flex align-items-center justify-content-center">
+                                <span class="text-white me-3">Partager:</span>
+
+                                <li class="social-icon-item">
+                                    <a href="#" class="social-icon-link">
+                                        <span class="bi-facebook"></span>
+                                    </a>
+                                </li>
+
+                                <li class="social-icon-item">
+                                    <a href="#" class="social-icon-link">
+                                        <span class="bi-twitter"></span>
+                                    </a>
+                                </li>
+
+                                <li class="social-icon-item">
+                                    <a href="#" class="social-icon-link">
+                                        <span class="bi-instagram"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-wrap">
+                <video autoplay="" loop="" muted="" class="custom-video" poster="">
+<!-- Vidéo -->
+<source src="{% static 'video/pexels-2022395.mp4' %}" type="video/mp4">
+
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+
+
+
+
+
+        <section class="about-section section-padding" id="section_2">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-12 mb-4 mb-lg-0 d-flex align-items-center">
+                        <div class="services-info">
+                            <h2 class="text-white mb-4">🎟️ Billetterie Express</h2>
+
+                            <p class="text-white">Bienvenue sur Billetterie Express, la plateforme incontournable pour réserver vos billets en ligne en toute simplicité. Que ce soit pour un concert, une pièce de théâtre, une soirée cinéma ou un événement culturel, nous vous connectons aux meilleures expériences près de chez vous.</p>
+
+                            <h6 class="text-white mt-4">🎉 Des expériences mémorables</h6>
+
+                            <p class="text-white">Vivez chaque événement comme si c'était unique. Grâce à notre système de réservation rapide, sécurisé et intuitif, vous ne raterez plus jamais une occasion de vibrer, danser, rire ou applaudir.</p>
+
+                            <h6 class="text-white mt-4">🙌 Rejoignez la communauté</h6>
+
+                            <p class="text-white">Des milliers d’utilisateurs nous font déjà confiance. Partagez le lien, invitez vos amis, et transformez chaque sortie en moment inoubliable..</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-12">
+                        <div class="about-text-wrap">
+<!-- Image principale -->
+<img src="{% static 'images/pexels-alexander-suhorucov-6457579.jpg' %}" class="about-image img-fluid">
+
+                            <div class="about-text-info d-flex">
+                                <div class="d-flex">
+                                    <i class="about-text-icon bi-person"></i>
+                                </div>
+
+
+                                <div class="ms-4">
+                                    <h3>un moment heureux</h3>
+
+                                    <p class="mb-0">✅ Simplicité & Sécurité</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <br>
+<!-- food section -->
+<section class="food_section layout_padding-bottom" id="section_3">
+  <div class="container text-white">
+    <div class="heading_container heading_center mb-5">
+      <h2>Événements disponibles</h2>
+    </div>
+
+    <div class="filters-content">
+      <div class="row grid gy-4">
+
+        {% for event in events %}
+        <div class="col-sm-6 col-lg-4 all {% if event.category == 'concert' %}burger{% elif event.category == 'cinema' %}pizza{% else %}pasta{% endif %}">
+          <div class="box rounded-4 shadow-sm overflow-hidden" style="background-color: #1e1e2f;">
+
+            <!-- Image pleine largeur et hauteur -->
+            <div class="img-box" style="height: 200px; overflow: hidden;">
+              {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.title }}" class="img-fluid w-100 h-100" style="object-fit: cover;">
+              {% else %}
+                <img src="{% static 'images/default_event.jpg' %}" alt="Événement" class="img-fluid w-100 h-100" style="object-fit: cover;">
+              {% endif %}
+            </div>
+
+            <!-- Détails -->
+            <div class="detail-box p-4 text-white" style="background-color: #1e1e2f; border-top-left-radius: 40px;">
+              <h5 class="fw-bold text-white">{{ event.title }}</h5>
+              <p class="mb-2 text-white" style="font-size: 0.9rem;">{{ event.description }}</p>
+              <p class="mb-2 text-white">{{ event.date|date:"l d F Y H:i" }} à {{ event.location }}</p>
+
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <h6 class="mb-0 text-white">
+    {% if event.lowest_ticket_price == 0 %}
+        <strong>Gratuit</strong>
+    {% elif event.lowest_ticket_price %}
+{{ event.lowest_ticket_price }} Franc
+    {% else %}
+        <em>Non défini</em>
+    {% endif %}
+                </h6>
+                <a href="{% url 'reserver_ticket' event.id %}" class="btn btn-warning btn-sm ">Réserver
+                  <i class="bi bi-cart text-white"></i>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+        <section class="artists-section section-padding" id="section_4">
+            <div class="container">
+                <div class="row justify-content-center">
+
+                    <div class="col-12 text-center">
+                        <h1 class="mb-4">Rencontrez les artistes</h1>
+                    </div>
+
+                    <div class="col-lg-5 col-12">
+                        <div class="artists-thumb">
+                            <div class="artists-image-wrap">
+<img src="{% static 'images/artists/mass.jpg' %}" class="artists-image img-fluid">
+
+                            </div>
+
+                            <div class="artists-hover">
+                                <p>
+                                    <strong>Name:</strong>
+                                    Baye Maas
+                                </p>
+
+
+                                <p>
+                                    <strong>Music:</strong>
+                                    Mbalakh, R&amp;B
+                                </p>
+
+                                <hr>
+
+                                <p class="mb-0">
+                                    <strong>Youtube Channel:</strong>
+                                    <a href="#">Baye Maas</a>
+                                </p>
+                            </div>
+                        </div>
+
+                                                <div class="artists-thumb">
+                            <div class="artists-image-wrap">
+<img src="{% static 'images/artists/wally.jpg' %}" class="artists-image img-fluid">
+
+                            </div>
+
+                            <div class="artists-hover">
+                                <p>
+                                    <strong>Name:</strong>
+                                    Wally Ballago Seck
+                                </p>
+
+
+                                <p>
+                                    <strong>Music:</strong>
+                                    Mbalakh
+                                </p>
+
+                                <hr>
+
+                                <p class="mb-0">
+                                    <strong>Youtube Channel:</strong>
+                                    <a href="#">Wally Ballago Seck</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 col-12">
+                        <div class="artists-thumb">
+                            <div class="artists-image-wrap">
+<img src="{% static 'images/artists/amadeus.jpg' %}" class="artists-image img-fluid">
+
+                            </div>
+
+                            <div class="artists-hover">
+                                <p>
+                                    <strong>Name:</strong>
+                                    Massamba Amadeus
+                                </p>
+
+
+                                <p>
+                                    <strong>Music:</strong>
+                                    Mbalakh
+                                </p>
+
+                                <hr>
+
+                                <p class="mb-0">
+                                    <strong>Youtube Channel:</strong>
+                                    <a href="#">Massamba Amadeus</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="artists-thumb">
+<img src="{% static 'images/artists/vj.jpeg' %}" class="artists-image img-fluid">
+
+
+                            <div class="artists-hover">
+                                <p>
+                                    <strong>Name:</strong>
+                                    Mouhamed VJ
+                                </p>
+
+
+                                <p>
+                                    <strong>Music:</strong>
+                                    Mbalakh
+                                </p>
+
+                                <hr>
+
+                                <p class="mb-0">
+                                    <strong>Youtube Channel:</strong>
+                                    <a href="#">VJ</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+        <section class="contact-section section-padding" id="section_6">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-8 col-12 mx-auto">
+                        <h2 class="text-center mb-4">Etes-vous Intéressez? Let's talk</h2>
+
+                        <nav class="d-flex justify-content-center">
+                            <div class="nav nav-tabs align-items-baseline justify-content-center" id="nav-tab"
+                                role="tablist">
+                                <button class="nav-link active" id="nav-ContactForm-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-ContactForm" type="button" role="tab"
+                                    aria-controls="nav-ContactForm" aria-selected="false">
+                                    <h5>Contactez-nous</h5>
+                                </button>
+
+                            </div>
+                        </nav>
+
+                        <div class="tab-content shadow-lg mt-5" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-ContactForm" role="tabpanel"
+                                aria-labelledby="nav-ContactForm-tab">
+                                <form class="custom-form contact-form mb-5 mb-lg-0" action="#" method="post"
+                                    role="form">
+                                    <div class="contact-form-body">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <input type="text" name="contact-name" id="contact-name"
+                                                    class="form-control" placeholder="Full name" required>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <input type="email" name="contact-email" id="contact-email"
+                                                    pattern="[^ @]*@[^ @]*" class="form-control"
+                                                    placeholder="Email address" required>
+                                            </div>
+                                        </div>
+
+
+                                        <textarea name="contact-message" rows="3" class="form-control"
+                                            id="contact-message" placeholder="Message"></textarea>
+
+                                        <div class="col-lg-4 col-md-10 col-8 mx-auto">
+                                            <button type="submit" class="form-control">Send message</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="site-footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-12">
+                        <h2 class="text-white mb-lg-0">Billetterie Express</h2>
+                    </div>
+
+                    <div class="col-lg-6 col-12 d-flex justify-content-lg-end align-items-center">
+                        <ul class="social-icon d-flex justify-content-lg-end">
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-twitter"></span>
+                                </a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-apple"></span>
+                                </a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-instagram"></span>
+                                </a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-youtube"></span>
+                                </a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-pinterest"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 col-12 mb-4 pb-2">
+                    <h5 class="site-footer-title mb-3">Liens</h5>
+
+                    <ul class="site-footer-links">
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Accueil</a>
+                        </li>
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">A propos de nous</a>
+                        </li>
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Artistes</a>
+                        </li>
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Schedule</a>
+                        </li>
+
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                    <h5 class="site-footer-title mb-3">Have a question?</h5>
+
+                    <p class="text-white d-flex mb-1">
+                        <a href="tel: 090-080-0760" class="site-footer-link">
+                            +221 77 260 79 77
+                        </a>
+                    </p>
+
+                    <p class="text-white d-flex">
+                        <a href="mailto:hello@company.com" class="site-footer-link">
+                            abdoulahadgueye1999@gmail.com
+                        </a>
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-11 mb-4 mb-lg-0 mb-md-0">
+                    <h5 class="site-footer-title mb-3">Adresse</h5>
+
+                    <p class="text-white d-flex mt-3 mb-2">
+                        Mboro, Thiés, Sénégal</p>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="site-footer-bottom">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-12 mt-5">
+                        <p class="copyright-text">Copyright © 2025 MAN_TECH</p>
+                        <p class="copyright-text">Distributed by: <a href="">@MAN_TECH</a></p>
+                    </div>
+
+                    <div class="col-lg-8 col-12 mt-lg-5">
+                        <ul class="site-footer-links">
+                            <li class="site-footer-link-item">
+                                <a href="#" class="site-footer-link">Terms &amp; Conditions</a>
+                            </li>
+
+                            <li class="site-footer-link-item">
+                                <a href="#" class="site-footer-link">Privacy Policy</a>
+                            </li>
+
+                            <li class="site-footer-link-item">
+                                <a href="#" class="site-footer-link">Your Feedback</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--
+
+T e m p l a t e M o
+
+-->
+
+<!-- JAVASCRIPT FILES -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.sticky.js' %}"></script>
+<script src="{% static 'js/click-scroll.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+</body>
+
+</html>

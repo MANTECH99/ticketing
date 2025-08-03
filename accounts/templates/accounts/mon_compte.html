@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- templates/dashboard.html -->
+
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2>Mon compte</h2>
+
+<p>Bienvenue, {{ request.user.first_name }} {{ request.user.last_name }}</p>
+
+<h3>Mes réservations :</h3>
+
+{% if reservations %}
+    <ul>
+        {% for res in reservations %}
+            <li>
+                <strong>{{ res.event.title }}</strong><br>
+                Date : {{ res.event.date|date:"d/m/Y H:i" }}<br>
+                Quantité : {{ res.quantity }}<br>
+                Statut : {{ res.status }}<br>
+                Paiement : {{ res.payment_status }}<br>
+                Réservé le : {{ res.created_at|date:"d/m/Y H:i" }}<br>
+
+                {% if res.payment_status == "payé" %}
+                    <p>🎟️ Tickets :</p>
+                    <ul>
+                        {% for ticket in res.ticket_set.all %}
+                            <li>
+                                <a href="{% url 'telecharger_ticket' ticket.id %}" target="_blank">
+                                    Télécharger ticket n°{{ ticket.id }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="color: grey;">⚠️ Paiement non effectué – téléchargement indisponible.</p>
+                {% endif %}
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Vous n'avez encore effectué aucune réservation.</p>
+{% endif %}
+{% endblock %}

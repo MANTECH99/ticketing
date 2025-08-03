@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- templates/dashboard.html -->
+
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<section class="food_section layout_padding-bottom" id="section_3">
+  <div class="container ">
+<div class="d-flex justify-content-between align-items-center mb-5" style="border-bottom: 2px solid #eee; padding-bottom: 10px;">
+  <h2 class="mb-0">🎟 Événements disponibles</h2>
+  <a href="{% url 'creer_event' %}" class="btn btn-primary" style="font-weight: 600; display: inline-flex; align-items: center;">
+    ➕ Créer un événement
+  </a>
+</div>
+
+
+    <div class="filters-content">
+      <div class="row grid gy-4">
+
+        {% for event in events %}
+        <div class="col-sm-6 col-lg-4 all {% if event.category == 'concert' %}burger{% elif event.category == 'cinema' %}pizza{% else %}pasta{% endif %}">
+          <div class="box rounded-4 shadow-sm overflow-hidden" style="background-color: #1e1e2f;">
+
+            <!-- Image pleine largeur et hauteur -->
+            <div class="img-box" style="height: 200px; overflow: hidden;">
+              {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.title }}" class="img-fluid w-100 h-100" style="object-fit: cover;">
+              {% else %}
+                <img src="{% static 'images/default_event.jpg' %}" alt="Événement" class="img-fluid w-100 h-100" style="object-fit: cover;">
+              {% endif %}
+            </div>
+
+            <!-- Détails -->
+            <div class="detail-box p-4 text-white" style="background-color: #1e1e2f; border-top-left-radius: 40px;">
+              <h5 class="fw-bold text-white">{{ event.title }}</h5>
+              <p class="mb-2 text-white">{{ event.date|date:"l d F Y H:i" }} à {{ event.location }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <a href="{% url 'ajouter_ticket_type' event.id %}">➕ Créer un type de ticket</a><br>
+                                <a href="{% url 'modifier_event' event.id %}">✏️ Modifier</a>
+            </div>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <h6 class="mb-0 text-white">
+    {% if event.lowest_ticket_price == 0 %}
+        <strong>Gratuit</strong>
+    {% elif event.lowest_ticket_price %}
+{{ event.lowest_ticket_price }} Franc
+    {% else %}
+        <em>Non défini</em>
+    {% endif %}
+                </h6>
+                      <a href="{% url 'voir_tickets_event' event.id %}">Voir tickets</a>
+                <a href="{% url 'reserver_ticket' event.id %}" class="btn btn-warning btn-sm ">Réserver
+                  <i class="bi bi-cart text-white"></i>
+                </a>
+              </div>
+            </div>
+
+          </div><br>
+        </div>
+                {% empty %}
+    <p>Aucun événement trouvé.</p>
+        {% endfor %}
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

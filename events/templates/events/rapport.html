@@ -1,0 +1,50 @@
+<!-- templates/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Rapports PDF des événements{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">📄 Rapports PDF par événement</h4>
+        <p class="card-description">Télécharge les rapports pour chaque événement</p>
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Rapport PDF</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for event in events %}
+              <tr>
+                <td>{{ event.title }}</td>
+                <td>
+                  {% if event.id %}
+                    <a href="{% url 'rapport_pdf_event' event.id %}" class="btn btn-sm btn-outline-primary">
+                      📄 Télécharger le rapport
+                    </a>
+                  {% else %}
+                    <span class="text-muted">ID manquant</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="2" class="text-center text-muted">Aucun événement disponible.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <a href="{% url 'dashboard_admin' %}" class="btn btn-outline-secondary mt-3">⬅️ Retour au tableau de bord</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+
+{% block title %}Créer un événement{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8 grid-margin stretch-card mx-auto">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-4">🎉 Créer un événement</h4>
+        <form method="post" enctype="multipart/form-data" class="forms-sample">
+          {% csrf_token %}
+          
+          <div class="form-group">
+            <label for="id_title">Titre</label>
+            {{ form.title|add_class:"form-control" }}
+          </div>
+
+          <div class="form-group">
+            <label for="id_description">Description</label>
+            {{ form.description|add_class:"form-control" }}
+          </div>
+
+          <div class="form-group">
+            <label for="id_date">Date</label>
+            {{ form.date|add_class:"form-control" }}
+          </div>
+
+          <div class="form-group">
+            <label for="id_location">Lieu</label>
+            {{ form.location|add_class:"form-control" }}
+          </div>
+
+          <div class="form-group">
+            <label for="id_total_tickets">Nombre total de tickets</label>
+            {{ form.total_tickets|add_class:"form-control" }}
+          </div>
+
+          <div class="form-group">
+            <label for="id_type">Type d'événement</label>
+            {{ form.type|add_class:"form-control" }}
+          </div>
+
+          <div class="form-group">
+            <label for="id_image">Image</label>
+            {{ form.image|add_class:"form-control-file" }}
+          </div>
+
+          <button type="submit" class="btn btn-primary mr-2">Créer</button>
+          <a href="{% url 'dashboard_admin' %}" class="btn btn-light">Annuler</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

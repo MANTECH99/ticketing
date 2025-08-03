@@ -1,0 +1,153 @@
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
+from io import BytesIO
+import base64
+
+def generate_ticket_pdf(ticket):
+    # Lire le QR code en base64 pour l'inclure dans le HTML
+    qr_path = ticket.qr_code.path
+    with open(qr_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+
+    html_string = render_to_string('tickets/ticket_pdf.html', {
+        'ticket': ticket,
+        'qr_base64': encoded_string,
+    })
+    pdf_file = BytesIO()
+    pisa_status = pisa.CreatePDF(src=html_string, dest=pdf_file)
+    if pisa_status.err:
+        return None
+    return pdf_file.getvalue()
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: sans-serif; }
+        .container { text-align: center; margin: 40px; }
+        .qr { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎫 Ticket d'événement</h2>
+        <p><strong>Événement :</strong> {{ ticket.reservation.event.title }}</p>
+        <p><strong>Date :</strong> {{ ticket.reservation.event.date|date:"d/m/Y H:i" }}</p>
+        <p><strong>Lieu :</strong> {{ ticket.reservation.event.location }}</p>
+        <p><strong>Nom :</strong> {{ ticket.reservation.user.first_name }} {{ ticket.reservation.user.last_name }}</p>
+            <p><strong>Numéro du ticket :</strong> #{{ ticket.id }}</p>
+                   <p><strong>Ticket validé :</strong> {% if ticket.used %}✅ Oui{% else %}❌ Non{% endif %}</p>
+
+        <div class="qr">
+            <img src="data:image/png;base64,{{ qr_base64 }}" width="200" />
+        </div>
+        <p>À présenter à l’entrée</p>
+    </div>
+</body>
+</html>
+
+
+
+
+
+{% load static %}
+<link rel="stylesheet" href="{{ fontawesome_css_path }}">
+
+
+<div class="ticket created-by-anniedotexe">
+    <div class="left">
+        <div class="image">
+            <p class="admit-one">
+                <span>ADMIT ONE</span>
+                <span>ADMIT ONE</span>
+                <span>ADMIT ONE</span>
+            </p>
+            <div class="ticket-number">
+                <p>
+                    #20030220
+                </p>
+            </div>
+        </div>
+        <div class="ticket-info">
+            <p class="date">
+                <span>TUESDAY</span>
+                <span class="june-29">JUNE 29TH</span>
+                <span>2021</span>
+            </p>
+            <div class="show-name">
+                <h1>SOUR Prom</h1>
+                <h2>Olivia Rodrigo</h2>
+            </div>
+            <div class="time">
+                <p>8:00 PM <span>TO</span> 11:00 PM</p>
+                <p>DOORS <span>@</span> 7:00 PM</p>
+            </div>
+            <p class="location"><span>East High School</span>
+                <span class="separator"><i class="far fa-smile"></i></span><span>Salt Lake City, Utah</span>
+            </p>
+        </div>
+    </div>
+    <div class="right">
+        <p class="admit-one">
+            <span>ADMIT ONE</span>
+            <span>ADMIT ONE</span>
+            <span>ADMIT ONE</span>
+        </p>
+        <div class="right-info-container">
+            <div class="show-name">
+                <h1>SOUR Prom</h1>
+            </div>
+            <div class="time">
+                <p>8:00 PM <span>TO</span> 11:00 PM</p>
+                <p>DOORS <span>@</span> 7:00 PM</p>
+            </div>
+            <div class="barcode">
+                <img src="https://external-preview.redd.it/cg8k976AV52mDvDb5jDVJABPrSZ3tpi1aXhPjgcDTbw.png?auto=webp&s=1c205ba303c1fa0370b813ea83b9e1bddb7215eb" alt="QR code">
+            </div>
+            <p class="ticket-number">
+                #20030220
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from io import BytesIO
+import base64
+import os
+from django.conf import settings
+from weasyprint import HTML, CSS
+
+
+def generate_ticket_pdf(ticket):
+    # Lire le QR code en base64
+    qr_path = ticket.qr_code.path
+    with open(qr_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+
+    # Génération du HTML à partir du template
+    html_string = render_to_string('tickets/ticket_pdf.html', {
+        'ticket': ticket,
+        'qr_base64': encoded_string,
+        'fontawesome_css_path': os.path.join(settings.BASE_DIR, 'static/fontawesome/css/all.min.css'),
+    })
+    # Chemin absolu vers le CSS
+    css_path = os.path.join(settings.BASE_DIR, 'static/css/style.css')
+    # Génération PDF avec WeasyPrint
+    pdf_file = BytesIO()
+    HTML(string=html_string).write_pdf(
+        pdf_file,
+        stylesheets=[
+            CSS(filename=os.path.join(settings.BASE_DIR, 'static/css/style.css')),
+            CSS(filename=os.path.join(settings.BASE_DIR, 'static/fontawesome/css/all.min.css')),    ]
+    )
+    return pdf_file.getvalue()

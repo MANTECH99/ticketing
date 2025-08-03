@@ -1,0 +1,28 @@
+{% extends 'base.html' %}  {# ou ton layout principal #}
+
+{% block content %}
+<h2 class="mt-4">Liste des événements avec tickets à valider</h2>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Événement</th>
+            <th>Tickets à valider</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.title }}</td>
+                <td>
+                    {% if event.id %}
+                        <a href="{% url 'tickets_a_valider' event.id %}">🎟 Tickets à valider</a><br>
+                    {% else %}
+                        <span class="text-muted">ID manquant</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!-- templates/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Tickets à valider - {{ event.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">🎫 Tickets pour l’événement : {{ event.title }}</h4>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID Ticket</th>
+                <th>Utilisateur</th>
+                <th>Paiement</th>
+                <th>Utilisé ?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for ticket in tickets %}
+              <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.reservation.user.username }}</td>
+                <td>
+                  {% if ticket.reservation.payment_status == "payé" %}
+                    <label class="badge badge-success">Payé</label>
+                  {% elif ticket.reservation.payment_status == "en attente" %}
+                    <label class="badge badge-warning">En attente</label>
+                  {% else %}
+                    <label class="badge badge-danger">{{ ticket.reservation.payment_status|capfirst }}</label>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if ticket.used %}
+                    <label class="badge badge-success">Oui</label>
+                  {% else %}
+                    <label class="badge badge-danger">Non</label>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="4" class="text-center text-muted">Aucun ticket disponible</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <a href="{% url 'dashboard_admin' %}" class="btn btn-outline-primary mt-3">⬅️ Retour</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

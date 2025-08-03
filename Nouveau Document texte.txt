@@ -1,0 +1,35 @@
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+class CustomUserCreationForm(UserCreationForm):
+    first_name = forms.CharField(required=True, label="Prénom")
+    last_name = forms.CharField(required=True, label="Nom")
+    email = forms.EmailField(required=True, label="Adresse email")
+
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "email", "password1", "password2")
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription</title>
+</head>
+<body>
+  <h2>Créer un compte</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">S'inscrire</button>
+  </form>
+  <p>Déjà inscrit ? <a href="{% url 'login' %}">Se connecter</a></p>
+</body>
+</html>

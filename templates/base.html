@@ -1,0 +1,36 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Skydash Admin{% endblock %}</title>
+
+  <!-- Static files -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+</head>
+<body>
+  <div class="container-scroller">
+
+    {% include "partials/navbar.html" %}
+    <div class="container-fluid page-body-wrapper">
+      {% include "partials/sidebar.html" %}
+      <div class="main-panel">
+        <div class="content-wrapper">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+  <script src="{% static 'js/template.js' %}"></script>
+    <script src="{% static 'js/off-canvas.js' %}"></script>
+
+</body>
+</html>

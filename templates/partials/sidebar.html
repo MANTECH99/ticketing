@@ -1,0 +1,54 @@
+<!-- templates/partials/sidebar.html -->
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+
+    {% if user.is_superuser %}
+      <!-- Superutilisateur voit tout -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'dashboard_admin' %}">
+          <i class="icon-grid menu-icon"></i>
+          <span class="menu-title">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'event_list' %}">
+          <i class="icon-layout menu-icon"></i>
+          <span class="menu-title">Événements</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'liste_utilisateurs' %}">
+          <i class="icon-columns menu-icon"></i>
+          <span class="menu-title">Users</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% if user.is_superuser or user.is_staff %}
+      <!-- Staff et superuser voient ceci -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'scan_ticket' %}">
+          <i class="icon-bar-graph menu-icon"></i>
+          <span class="menu-title">Scanner Ticket</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'events_pour_validation' %}">
+          <i class="icon-bar-graph menu-icon"></i>
+          <span class="menu-title">Tickets à valider</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% if not user.is_staff %}
+      <!-- Utilisateur normal -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'mon_compte' %}">
+          <i class="icon-bar-graph menu-icon"></i>
+          <span class="menu-title">Mes réservations</span>
+        </a>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>

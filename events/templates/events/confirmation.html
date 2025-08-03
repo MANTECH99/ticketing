@@ -1,0 +1,390 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Festava Live - Ticket HTML Form</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;400;700&display=swap" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+<link href="{% static 'css/templatemo-festava-live.css' %}" rel="stylesheet">
+    <!--
+
+TemplateMo 583 Festava Live
+
+https://templatemo.com/tm-583-festava-live
+
+-->
+
+</head>
+
+<body>
+
+    <main>
+
+        <header class="site-header">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12 col-12 d-flex flex-wrap">
+                        <p class="d-flex me-4 mb-0">
+                            <i class="bi-person custom-icon me-2"></i>
+                            <strong class="text-dark">Bienvenue sur le site officiel de Réservation</strong>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="">
+                   Billetterie Express
+                </a>
+
+
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
+        {% if request.path == '/' %}
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="#section_1">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="#section_2">A propos de nous</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="#section_3">Evénements</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="#section_4">Nos artistes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="#section_6">Contact</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="{% url 'user_dashboard' %}#section_1">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="{% url 'user_dashboard' %}#section_2">A propos de nous</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="{% url 'user_dashboard' %}#section_3">Evénements</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="{% url 'user_dashboard' %}#section_4">Nos artistes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link click-scroll" href="{% url 'user_dashboard' %}#section_6">Contact</a>
+            </li>
+        {% endif %}
+
+                                                  {% if request.user.is_authenticated %}
+
+                                                                                                                                                            <li class="nav-item">
+                                  <a href="{% url 'mon_compte' %}" class="text-white">Mon compte</a>
+                        </li>
+<li class="nav-item">
+  <a href="{% url 'logout' %}" class="nav-link" title="Déconnexion">
+    <i class="bi bi-box-arrow-right"></i>
+  </a>
+</li>
+
+
+                             {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+<section class="ticket-section section-padding">
+    <div class="section-overlay"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 col-12 mx-auto">
+                <div class="custom-form ticket-form p-4 bg-white rounded shadow">
+
+
+
+                    <h2 class="text-center mb-4">
+                        🎉 Réservation confirmée
+                        {% if not reservation.event.is_free %}
+                            <small class="text-muted">(en attente de paiement)</small>
+                        {% endif %}
+                    </h2>
+
+                    <p><strong>Événement :</strong> {{ reservation.event.title }}</p>
+                    <p><strong>Quantité :</strong> {{ reservation.quantity }}</p>
+
+                    {% if reservation.event.is_free %}
+                        <p class="text-success">✅ Événement gratuit. Vous pouvez télécharger vos tickets :</p>
+
+                        <h5>🎫 Vos tickets :</h5>
+                        <ul>
+                            {% for ticket in reservation.ticket_set.all %}
+                                <li>
+                                    <a href="{% url 'telecharger_ticket' ticket.id %}" class="btn btn-link">
+                                        Télécharger ticket n°{{ ticket.id }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                    {% else %}
+                        <p><strong>Total à payer :</strong> {{ reservation.total_price }} F</p>
+
+{% if reservation.payment_status == "non_payé" %}
+            <h6 class="text-center">Choisir un mode de paiement</h6>
+  <div class="mt-4">
+    <!-- Sélection du mode de paiement -->
+
+<div class="d-flex justify-content-center gap-3 mb-2">
+  <button type="button" class="btn btn-warning d-flex align-items-center gap-2" onclick="showPaymentForm('orange')">
+    <img src="{% static 'images/orange-money.png' %}" alt="Orange Money" style="height: 24px;">
+    Orange Money
+  </button>
+
+  <button type="button" class="btn btn-primary d-flex align-items-center gap-2" onclick="showPaymentForm('wave')">
+    <img src="{% static 'images/wave.png' %}" alt="Wave" style="height: 24px;">
+    Wave
+  </button>
+</div>
+
+
+
+    <!-- Formulaire Orange Money (masqué au départ) -->
+    <form method="post" action="{% url 'process_orange_payment' reservation.id %}" id="form-orange" style="display: none;">
+      {% csrf_token %}
+      <label class="form-label">Numéro Orange Money :</label>
+      <input type="text" name="phone" class="form-control mb-2" placeholder="77xxxxxxx" required>
+      <button type="submit" class="btn btn-warning w-100">Payer avec Orange Money</button>
+    </form>
+
+    <!-- Formulaire Wave (masqué au départ) -->
+    <form method="post" action="{% url 'process_wave_payment' reservation.id %}" id="form-wave" style="display: none;">
+      {% csrf_token %}
+      <label class="form-label">Numéro Wave :</label>
+      <input type="text" name="phone" class="form-control mb-2" placeholder="77xxxxxxx" required>
+      <button type="submit" class="btn btn-primary w-100">Payer avec Wave</button>
+    </form>
+  </div>
+
+
+
+                        {% elif reservation.payment_status == "en_cours" %}
+                            <div class="alert alert-info mt-3">
+                                {% if reservation.payment_method == "orange" %}
+                                    📲 Paiement en attente via <strong>Orange Money</strong>. Veuillez valider sur votre téléphone (#144#).
+                                {% elif reservation.payment_method == "wave" %}
+                                    📲 Paiement en attente via <strong>Wave</strong>. Finalisez la transaction dans l'application Wave.
+                                {% else %}
+                                    📲 Paiement en attente. Veuillez vérifier sur votre téléphone.
+                                {% endif %}
+                            </div>
+
+                        {% elif reservation.payment_status == "payé" %}
+                            <div class="alert alert-success mt-3">
+                                ✅ Paiement validé. Vous pouvez télécharger vos tickets ci-dessous :
+                            </div>
+
+                            <h5>🎫 Vos tickets :</h5>
+                            <ul>
+                                {% for ticket in reservation.ticket_set.all %}
+                                    <li>
+                                        <a href="{% url 'telecharger_ticket' ticket.id %}" class="btn btn-link">
+                                            Télécharger ticket n°{{ ticket.id }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="site-footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-12">
+                        <h2 class="text-white mb-lg-0">Billetterie Express</h2>
+                    </div>
+
+                    <div class="col-lg-6 col-12 d-flex justify-content-lg-end align-items-center">
+                        <ul class="social-icon d-flex justify-content-lg-end">
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-twitter"></span>
+                                </a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-apple"></span>
+                                </a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-instagram"></span>
+                                </a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-youtube"></span>
+                                </a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link">
+                                    <span class="bi-pinterest"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 col-12 mb-4 pb-2">
+                    <h5 class="site-footer-title mb-3">Liens</h5>
+
+                    <ul class="site-footer-links">
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Accueil</a>
+                        </li>
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">A propos de nous</a>
+                        </li>
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Artistes</a>
+                        </li>
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Schedule</a>
+                        </li>
+
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                    <h5 class="site-footer-title mb-3">Have a question?</h5>
+
+                    <p class="text-white d-flex mb-1">
+                        <a href="tel: 090-080-0760" class="site-footer-link">
+                            +221 77 260 79 77
+                        </a>
+                    </p>
+
+                    <p class="text-white d-flex">
+                        <a href="mailto:hello@company.com" class="site-footer-link">
+                            abdoulahadgueye1999@gmail.com
+                        </a>
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-11 mb-4 mb-lg-0 mb-md-0">
+                    <h5 class="site-footer-title mb-3">Adresse</h5>
+
+                    <p class="text-white d-flex mt-3 mb-2">
+                        Mboro, Thiés, Sénégal</p>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="site-footer-bottom">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-12 mt-5">
+                        <p class="copyright-text">Copyright © 2025 MAN_TECH</p>
+                        <p class="copyright-text">Distributed by: <a href="">@MAN_TECH</a></p>
+                    </div>
+
+                    <div class="col-lg-8 col-12 mt-lg-5">
+                        <ul class="site-footer-links">
+                            <li class="site-footer-link-item">
+                                <a href="#" class="site-footer-link">Terms &amp; Conditions</a>
+                            </li>
+
+                            <li class="site-footer-link-item">
+                                <a href="#" class="site-footer-link">Privacy Policy</a>
+                            </li>
+
+                            <li class="site-footer-link-item">
+                                <a href="#" class="site-footer-link">Your Feedback</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.sticky.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script>
+  function showPaymentForm(type) {
+    // Cacher tous les formulaires
+    document.getElementById('form-orange').style.display = 'none';
+    document.getElementById('form-wave').style.display = 'none';
+
+    // Afficher le formulaire sélectionné
+    if (type === 'orange') {
+      document.getElementById('form-orange').style.display = 'block';
+    } else if (type === 'wave') {
+      document.getElementById('form-wave').style.display = 'block';
+    }
+  }
+</script>
+
+</body>
+
+</html>
