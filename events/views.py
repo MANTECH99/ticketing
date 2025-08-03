@@ -103,6 +103,13 @@ def reserver_ticket(request, event_id):
         
                 # Étape 2 : Générer le QR code
                 qr_image_file = generate_qr_code(ticket)
+                if not qr_image_file:
+                    # Gérer l'erreur ou afficher un message d'erreur
+                    return render(request, 'events/reserver_ticket.html', {
+                        'event': event,
+                        'ticket_types': ticket_types,
+                        'error': "Erreur lors de la génération du QR code."
+                    })
         
                 # Étape 3 : Sauvegarder le QR dans le champ `qr_code` (Cloudinary)
                 ticket.qr_code.save(f"qr_ticket_{ticket.id}.png", qr_image_file)
