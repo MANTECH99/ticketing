@@ -110,6 +110,12 @@ https://templatemo.com/tm-583-festava-live
 </li>
 
 
+                         {% else %}
+<li class="nav-item">
+  <a href="{% url 'login' %}" class="nav-link" title="Déconnexion"> Se connecter
+  </a>
+</li>
+
                              {% endif %}
 
                     </ul>
