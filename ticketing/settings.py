@@ -203,3 +203,5 @@ CLOUDINARY_STORAGE = {
 
 MEDIA_URL = 'https://res.cloudinary.com/dpcsllhpt/'
 
+LOGIN_URL = '/login/'
+
