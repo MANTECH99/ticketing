@@ -274,3 +274,36 @@ def ajouter_ticket_type(request, event_id):
         form = TicketTypeForm()
 
     return render(request, 'events/ajouter_ticket_type.html', {'form': form, 'event': event})
+
+
+
+
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import user_passes_test
+
+@staff_member_required
+def delete_event(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    event.delete()
+    messages.success(request, "L'événement a été supprimé avec succès.")
+    return redirect('event_list')  # adapte le nom de ta vue de liste d'événements
+
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import Reservation  # adapte selon ton app
+
+@staff_member_required
+def liste_reservations(request):
+    reservations = Reservation.objects.select_related('event', 'user').order_by('-created_at')
+    return render(request, 'events/liste_reservations.html', {'reservations': reservations})
+
+
+@staff_member_required
+def supprimer_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+    reservation.delete()
+    messages.success(request, "Réservation supprimée avec succès.")
+    return redirect('liste_reservations')
+
