@@ -16,6 +16,9 @@ urlpatterns = [
 # urls.py
     path('events/<int:event_id>/ajouter-type/', views.ajouter_ticket_type, name='ajouter_ticket_type'),
     path('events', views.rapport, name='liste_rapport'),
+        path('events/<int:event_id>/delete/', views.delete_event, name='delete_event'),
+path('events/reservations/', views.liste_reservations, name='liste_reservations'),
+path('events/reservation/<int:reservation_id>/delete/', views.supprimer_reservation, name='supprimer_reservation'),
 
 
 
