@@ -205,3 +205,5 @@ MEDIA_URL = 'https://res.cloudinary.com/dpcsllhpt/'
 
 LOGIN_URL = '/login/'
 
+LANGUAGE_CODE = 'fr'
+
