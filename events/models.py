@@ -36,7 +36,7 @@ class Event(models.Model):
 class TicketType(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='ticket_types')
     name = models.CharField(max_length=50)  # Ex: simple, VIP, etc.
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.IntegerField()  # Au lieu de DecimalField
 
     def __str__(self):
         return f"{self.name} - {self.event.title} ({self.price} F)"
