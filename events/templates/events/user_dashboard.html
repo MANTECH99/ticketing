@@ -99,10 +99,10 @@ https://templatemo.com/tm-583-festava-live
                             <a class="nav-link click-scroll" href="#section_6">Contact</a>
                         </li>
                                                   {% if request.user.is_authenticated %}
+                            <li class="nav-item">
+    <a href="{% url 'mon_compte' %}" class="nav-link ">Mon compte</a>
+</li>
 
-                                                                                                                                                            <li class="nav-item">
-                                  <a href="{% url 'mon_compte' %}" class="text-white">Mon compte</a>
-                        </li>
 <li class="nav-item">
   <a href="{% url 'logout' %}" class="nav-link" title="Déconnexion">
     <i class="bi bi-box-arrow-right"></i>
@@ -140,10 +140,10 @@ https://templatemo.com/tm-583-festava-live
 
                     <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
                         <div class="date-wrap">
-                            <h5 class="text-white">
-                                <i class="custom-icon bi-clock me-2"></i>
-                                01 - 08<sup>th</sup>, Aout 2025
-                            </h5>
+<h5 class="text-white">
+    <i class="custom-icon bi-clock me-2"></i>
+    {% now "j F, Y" %}
+</h5>
                         </div>
 
                         <div class="location-wrap mx-auto py-3 py-lg-0">
