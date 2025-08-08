@@ -314,8 +314,9 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect
 import cloudinary.uploader
-from .utils import generate_qr_code, generate_ticket_pdf, send_ticket_email
-
+from tickets.email_utils import send_ticket_email
+from tickets.pdf_utils import generate_ticket_pdf
+from tickets.utils import generate_qr_code
 @login_required
 def envoyer_tickets_email(request, reservation_id):
     """Vue dédiée uniquement à l'envoi des tickets par email"""
