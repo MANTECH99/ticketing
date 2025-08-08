@@ -312,7 +312,9 @@ def supprimer_reservation(request, reservation_id):
 
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
-
+from django.shortcuts import get_object_or_404, redirect
+import cloudinary.uploader
+from .utils import generate_qr_code, generate_ticket_pdf, send_ticket_email
 
 @login_required
 def envoyer_tickets_email(request, reservation_id):
@@ -329,9 +331,28 @@ def envoyer_tickets_email(request, reservation_id):
         messages.error(request, "Aucun ticket à envoyer")
         return redirect('confirmation_reservation', reservation.id)
 
-    # Envoyer chaque ticket par email
-    for ticket in tickets:
-        send_ticket_email(ticket)  # Votre fonction d'envoi existante
+    try:
+        # Envoyer chaque ticket par email
+        for ticket in tickets:
+            # Si le ticket n'a pas de QR code (au cas où)
+            if not ticket.qr_code:
+                # Générer le QR code
+                qr_image_file = generate_qr_code(ticket)
+                
+                # Uploader sur Cloudinary
+                upload_result = cloudinary.uploader.upload(qr_image_file, folder='qr_codes')
+                ticket.qr_code = upload_result['public_id']
+                ticket.save()
+            
+            # Générer le PDF
+            pdf_bytes = generate_ticket_pdf(ticket)
+            
+            # Envoyer l'email avec le PDF en pièce jointe
+            send_ticket_email(ticket, pdf_bytes)
 
-    messages.success(request, "Vos tickets ont été envoyés par email avec succès!")
+        messages.success(request, "Vos tickets ont été envoyés par email avec succès!")
+    except Exception as e:
+        # Logger l'erreur ici si vous avez un système de logging
+        messages.error(request, f"Une erreur est survenue lors de l'envoi des tickets: {str(e)}")
+
     return redirect('confirmation_reservation', reservation.id)
