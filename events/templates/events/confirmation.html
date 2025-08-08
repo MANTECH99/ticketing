@@ -160,6 +160,20 @@ https://templatemo.com/tm-583-festava-live
                             {% endfor %}
                         </ul>
 
+                    
+                        {# AJOUTEZ CE BOUTON ICI #}
+    {% if reservation.ticket_set.exists %}
+    <div class="mt-3">
+        <form method="post" action="{% url 'envoyer_tickets_email' reservation.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-envelope"></i> Recevoir les tickets par email
+            </button>
+        </form>
+    </div>
+    {% endif %}
+    {# FIN DE L'AJOUT #}
+
                     {% else %}
                         <p><strong>Total à payer :</strong> {{ reservation.total_price }} F</p>
 
@@ -224,6 +238,19 @@ https://templatemo.com/tm-583-festava-live
                                     </li>
                                 {% endfor %}
                             </ul>
+
+                                            {# AJOUTEZ CE BOUTON ICI #}
+    {% if reservation.ticket_set.exists %}
+    <div class="mt-3">
+        <form method="post" action="{% url 'envoyer_tickets_email' reservation.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-envelope"></i> Recevoir les tickets par email
+            </button>
+        </form>
+    </div>
+    {% endif %}
+    {# FIN DE L'AJOUT #}
                         {% endif %}
                     {% endif %}
 
