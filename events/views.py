@@ -123,7 +123,7 @@ def reserver_ticket(request, event_id):
                 pdf_bytes = generate_ticket_pdf(ticket)
         
                 # Étape 5 : Envoyer l'email avec pièce jointe PDF
-                send_ticket_email(ticket, pdf_bytes)
+                #send_ticket_email(ticket, pdf_bytes)
 
         # Redirection vers une page de confirmation
         return redirect('confirmation_reservation', reservation.id)
