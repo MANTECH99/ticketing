@@ -4,8 +4,6 @@ WORKDIR /app
 
 # Installer les dépendances système nécessaires pour mysqlclient ET xhtml2pdf
 RUN apt-get update && apt-get install -y \
-    wkhtmltopdf \
-    fontconfig \
     default-libmysqlclient-dev \
     build-essential \
     libffi-dev \
@@ -16,7 +14,6 @@ RUN apt-get update && apt-get install -y \
     libpango1.0-0 \
     libgdk-pixbuf2.0-0 \
     libfreetype6-dev \
-    && ln -sf /usr/bin/wkhtmltopdf /usr/local/bin/wkhtmltopdf \
     && rm -rf /var/lib/apt/lists/*
 
 # Copier le fichier requirements.txt et installer les dépendances Python
