@@ -4,6 +4,8 @@ WORKDIR /app
 
 # Installer les dépendances système nécessaires pour mysqlclient ET xhtml2pdf
 RUN apt-get update && apt-get install -y \
+    wkhtmltopdf \
+    fontconfig \
     default-libmysqlclient-dev \
     build-essential \
     libffi-dev \
