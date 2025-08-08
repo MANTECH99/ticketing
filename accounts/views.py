@@ -14,6 +14,7 @@ def register_view(request):
             user.last_name = form.cleaned_data['last_name']
             user.email = form.cleaned_data['email']
             user.save()
+            messages.success(request, "Inscription réussie ! Vous pouvez maintenant vous connecter.")
             login(request, user)  # Connexion automatique
             return redirect('login')  # Redirige vers la liste des événements après inscription
     else:
@@ -35,6 +36,8 @@ def login_view(request):
                 return redirect('scan_ticket')  # Redirection pour les agents uniquement
             else:
                 return redirect('user_dashboard')  # Redirection pour les utilisateurs standards
+        else:
+            messages.error(request, "Identifiants incorrects. Veuillez réessayer.")
 
 
     else:
@@ -81,7 +84,7 @@ from events.models import Reservation, Event
 
 @login_required
 def mon_compte(request):
-    reservations = Reservation.objects.filter(user=request.user).prefetch_related('ticket_set', 'event').order_by('-created_at')
+    reservations = Reservation.objects.filter(user=request.user, payment_status='payé').prefetch_related('ticket_set', 'event').order_by('-created_at')
     return render(request, 'accounts/mon_compte.html', {'reservations': reservations})
 
 def user_dashboard(request):
