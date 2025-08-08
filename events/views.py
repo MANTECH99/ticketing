@@ -307,3 +307,31 @@ def supprimer_reservation(request, reservation_id):
     messages.success(request, "Réservation supprimée avec succès.")
     return redirect('liste_reservations')
 
+
+
+
+from django.contrib import messages
+from django.core.exceptions import PermissionDenied
+
+
+@login_required
+def envoyer_tickets_email(request, reservation_id):
+    """Vue dédiée uniquement à l'envoi des tickets par email"""
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    # Vérification de sécurité
+    if reservation.user != request.user:
+        raise PermissionDenied("Vous n'avez pas accès à cette réservation")
+
+    # Vérifier qu'il y a des tickets
+    tickets = reservation.ticket_set.all()
+    if not tickets.exists():
+        messages.error(request, "Aucun ticket à envoyer")
+        return redirect('confirmation_reservation', reservation.id)
+
+    # Envoyer chaque ticket par email
+    for ticket in tickets:
+        send_ticket_email(ticket)  # Votre fonction d'envoi existante
+
+    messages.success(request, "Vos tickets ont été envoyés par email avec succès!")
+    return redirect('confirmation_reservation', reservation.id)
