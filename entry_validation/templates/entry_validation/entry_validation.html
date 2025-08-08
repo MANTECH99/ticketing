@@ -4,16 +4,101 @@
     <meta charset="UTF-8">
     <title>Validation du ticket</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; }
-        .valide { color: green; }
-        .invalide { color: red; }
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            background-color: #f2f4f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .status-banner {
+            padding: 30px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+                margin-top: 100px; /* ✅ espace depuis le haut */
+        }
+
+        .valide {
+            background-color: #eafaf1;
+            color: #2ecc71;
+        }
+
+        .invalide {
+            background-color: #fdecea;
+            color: #e74c3c;
+        }
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 60px 50px;
+    max-width: 800px;
+    margin: 40px auto;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    font-size: 30px; /* taille globale du texte */
+}
+
+.details {
+    font-size: 35px; /* taille des infos à l’intérieur */
+    line-height: 1.8;
+    color: #333;
+}
+
+.details p {
+    margin: 14px 0;
+}
+
+
+.ticket-id {
+    font-family: 'Courier New', monospace;
+    background: #f0f0f0;
+    padding: 10px 20px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.footer {
+    margin-top: 40px;
+    font-size: 21px;
+    color: #888;
+}
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
 </head>
 <body>
-    <h2 class="{{ statut }}">{{ message }}</h2>
 
-    <p>Ticket n° {{ ticket.id }}</p>
-    <p>Événement : {{ ticket.reservation.event.title }}</p>
-    <p>Date : {{ ticket.reservation.event.date }}</p>
+    <!-- ✅ Message en haut de page -->
+    <div class="status-banner {{ statut }}">
+        {{ message }}
+    </div>
+
+<div class="card">
+    <div class="details">
+        <div class="ticket-id">Ticket n° {{ ticket.id }}</div>
+<p><strong><i class="fa-solid fa-calendar-day" style="color:#2ecc71; margin-right:20px;"></i> Événement :</strong> {{ ticket.reservation.event.title }}</p>
+
+<p><strong><i class="fa-regular fa-calendar" style="color:#e74c3c; margin-right:20px;"></i> Date :</strong> {{ ticket.reservation.event.date|date:"l d F Y" }}</p>
+
+<p><strong><i class="fa-regular fa-clock" style="color:#3498db; margin-right:20px;"></i> Heure :</strong> {{ ticket.reservation.event.date|date:"H:i" }}</p>
+
+
+
+    </div>
+
+    <div class="footer">
+        Merci de vous être présenté avec ce ticket.
+    </div>
+</div>
+
+
 </body>
 </html>
