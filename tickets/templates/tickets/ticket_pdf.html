@@ -3,25 +3,125 @@
 <head>
     <meta charset="utf-8">
     <style>
-        body { font-family: sans-serif; }
-        .container { text-align: center; margin: 40px; }
-        .qr { margin-top: 20px; }
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .ticket-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid #ccc;
+        }
+        .ticket-header {
+            background-color: #6a11cb;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .ticket-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .ticket-subtitle {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .ticket-body {
+            padding: 20px;
+        }
+        .info-qr-table {
+            width: 100%;
+            border-spacing: 10px;
+        }
+        .info-cell {
+            width: 60%;
+            vertical-align: top;
+            font-size: 14px;
+        }
+        .info-cell p {
+            margin: 6px 0;
+        }
+        .info-cell strong {
+            display: inline-block;
+            width: 80px;
+            color: #555;
+        }
+        .qr-cell {
+            width: 40%;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .ticket-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 13px;
+            margin-top: 10px;
+            background-color: {% if ticket.used %}#4CAF50{% else %}#F44336{% endif %};
+            color: white;
+        }
+        .ticket-number {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .ticket-footer {
+            text-align: center;
+            padding: 15px;
+            background: #f5f5f5;
+            font-size: 13px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>🎫 Ticket d'événement</h2>
-        <p><strong>Événement :</strong> {{ ticket.reservation.event.title }}</p>
-        <p><strong>Date :</strong> {{ ticket.reservation.event.date|date:"d/m/Y H:i" }}</p>
-        <p><strong>Lieu :</strong> {{ ticket.reservation.event.location }}</p>
-        <p><strong>Nom :</strong> {{ ticket.reservation.user.first_name }} {{ ticket.reservation.user.last_name }}</p>
-            <p><strong>Numéro du ticket :</strong> #{{ ticket.id }}</p>
-                   <p><strong>Ticket validé :</strong> {% if ticket.used %}✅ Oui{% else %}❌ Non{% endif %}</p>
-
-        <div class="qr">
-            <img src="data:image/png;base64,{{ qr_base64 }}" width="200" />
+    <div class="ticket-container">
+        <div class="ticket-header">
+            <h1 class="ticket-title">Ticket d'entrée</h1>
+            <div class="ticket-subtitle">{{ ticket.reservation.event.title }}</div>
         </div>
-        <p>À présenter à l’entrée</p>
+
+        <div class="ticket-body">
+            <table class="info-qr-table">
+                <tr>
+                    <!-- Infos à gauche -->
+                    <td class="info-cell">
+                        <p><strong>Événement:</strong> {{ ticket.reservation.event.title }}</p>
+                        <p><strong>Date:</strong> {{ ticket.reservation.event.date|date:"l d F Y à H:i" }}</p>
+                        <p><strong>Lieu:</strong> {{ ticket.reservation.event.location }}</p>
+                        <p><strong>Nom:</strong> {{ ticket.reservation.user.first_name }} {{ ticket.reservation.user.last_name }}</p>
+                    </td>
+
+<td class="qr-cell">
+    <img src="data:image/png;base64,{{ qr_base64 }}" width="120" /><br/>
+    <div class="ticket-status">
+        {% if ticket.used %}VALIDÉ{% else %}NON VALIDÉ{% endif %}
+    </div>
+</td>
+
+                </tr>
+            </table>
+
+            <div class="ticket-number">
+                Référence: #{{ ticket.id|stringformat:"010d" }}
+            </div>
+        </div>
+
+        <div class="ticket-footer">
+            À présenter à l'entrée • Merci pour votre réservation
+        </div>
     </div>
 </body>
 </html>
