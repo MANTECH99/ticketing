@@ -25,10 +25,22 @@
             <td>{{ reservation.quantity }}</td>
             <td>{{ reservation.payment_status }}</td>
             <td>{{ reservation.created_at|date:"d M Y H:i" }}</td>
-            <td>
-                <a href="{% url 'supprimer_reservation' reservation.id %}" class="btn btn-danger btn-sm"
-                   onclick="return confirm('Supprimer cette réservation ?');">Supprimer</a>
-            </td>
+<td>
+{% if reservation.ticket_set.all %}
+    {% for ticket in reservation.ticket_set.all %}
+        <a href="{% url 'telecharger_ticket' ticket.id %}" class="btn btn-primary btn-sm">
+            Télécharger le ticket n°{{ ticket.id }}
+        </a>
+    {% endfor %}
+{% else %}
+    <span class="text-muted">Aucun ticket généré</span>
+{% endif %}
+
+    <a href="{% url 'supprimer_reservation' reservation.id %}" class="btn btn-danger btn-sm"
+       onclick="return confirm('Supprimer cette réservation ?');">
+        Supprimer
+    </a>
+</td>
         </tr>
         {% empty %}
         <tr>
