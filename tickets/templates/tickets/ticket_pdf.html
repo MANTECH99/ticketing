@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+
+
+            <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <meta charset="utf-8">
@@ -37,26 +40,33 @@
         }
         .info-qr-table {
             width: 100%;
+  background-image: url("{{ request.scheme }}://{{ request.get_host }}{% static 'images/bg-ticket.jpg' %}");
             border-spacing: 10px;
         }
-        .info-cell {
-            width: 60%;
-            vertical-align: top;
-            font-size: 14px;
-        }
+    .info-cell,
+    .qr-cell {
+        background-color: rgba(255, 255, 255, 0.85);
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+
+    .qr-cell {
+        background-color: rgba(255, 255, 255, 0.85);
+        padding: 10px;
+        border-radius: 8px;
+                    text-align: center;
+            vertical-align: middle;
+    }
         .info-cell p {
             margin: 6px 0;
         }
         .info-cell strong {
             display: inline-block;
-            width: 80px;
+            width: 100px;
             color: #555;
         }
-        .qr-cell {
-            width: 40%;
-            text-align: center;
-            vertical-align: middle;
-        }
+
         .ticket-status {
             display: inline-block;
             padding: 5px 10px;
@@ -90,7 +100,7 @@
     <div class="ticket-container">
         <div class="ticket-header">
             <h1 class="ticket-title">Ticket d'entrée</h1>
-            <div class="ticket-subtitle">{{ ticket.reservation.event.title }}</div>
+            <div class="ticket-subtitle">                Référence: #{{ ticket.id|stringformat:"010d" }}</div>
         </div>
 
         <div class="ticket-body">
@@ -114,9 +124,7 @@
                 </tr>
             </table>
 
-            <div class="ticket-number">
-                Référence: #{{ ticket.id|stringformat:"010d" }}
-            </div>
+
         </div>
 
         <div class="ticket-footer">
