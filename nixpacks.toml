@@ -1,0 +1,21 @@
+[phases.setup]
+commands = [
+  "sudo apt-get update",
+  "sudo apt-get install -y wkhtmltopdf libxrender1 libfontconfig1 libxext6"
+]
+
+[phases.install]
+commands = [
+  "python -m venv /opt/venv",
+  ". /opt/venv/bin/activate && pip install -r requirements.txt"
+]
+
+[phases.build]
+commands = [
+  "echo 'Build phase - nothing special here'"
+]
+
+[phases.start]
+commands = [
+  ". /opt/venv/bin/activate && gunicorn --bind 0.0.0.0:8000 ticketing.wsgi:application"
+]
