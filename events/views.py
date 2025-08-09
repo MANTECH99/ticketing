@@ -120,7 +120,7 @@ def reserver_ticket(request, event_id):
                 ticket.save()
         
                 # Étape 4 : Générer le PDF (à partir du ticket qui a maintenant un QR)
-                pdf_bytes = generate_ticket_pdf(ticket, request)
+                pdf_bytes = generate_ticket_pdf(ticket)
         
                 # Étape 5 : Envoyer l'email avec pièce jointe PDF
                 #send_ticket_email(ticket, pdf_bytes)
