@@ -21,7 +21,7 @@ path('events/reservations/', views.liste_reservations, name='liste_reservations'
 path('events/reservation/<int:reservation_id>/delete/', views.supprimer_reservation, name='supprimer_reservation'),
 path('reservation/<int:reservation_id>/envoyer-tickets/', views.envoyer_tickets_email, name='envoyer_tickets_email'),
         path('test-wkhtml/', views.test_wkhtml, name='test_wkhtml'),
-
+    path('test-wkhtml-path/', test_wkhtml_path, name='test_wkhtml_path'),
 
 
 ]
