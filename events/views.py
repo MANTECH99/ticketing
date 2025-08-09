@@ -375,3 +375,14 @@ def test_wkhtml(request):
     response['Content-Disposition'] = 'inline; filename="test_wkhtml.pdf"'
     return response
 
+
+import subprocess
+from django.http import HttpResponse
+
+def test_wkhtml_path(request):
+    try:
+        path = subprocess.check_output(['which', 'wkhtmltopdf']).decode('utf-8').strip()
+    except subprocess.CalledProcessError:
+        path = "wkhtmltopdf not found"
+    return HttpResponse(f"Chemin wkhtmltopdf: {path}")
+
