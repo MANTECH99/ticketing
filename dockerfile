@@ -2,7 +2,7 @@ FROM python:3.12
 
 WORKDIR /app
 
-# Installer les dépendances système nécessaires pour mysqlclient ET xhtml2pdf
+# Installer wkhtmltopdf + dépendances
 RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     build-essential \
@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
     libpango1.0-0 \
     libgdk-pixbuf2.0-0 \
     libfreetype6-dev \
+    fontconfig \
+    wkhtmltopdf \
     && rm -rf /var/lib/apt/lists/*
 
 # Copier le fichier requirements.txt et installer les dépendances Python
