@@ -115,11 +115,13 @@ def orange_money_webhook(request):
 
             # Générer un ticket par place réservée
             for _ in range(reservation.quantity):
-                ticket = Ticket.objects.create(reservation=reservation)
+                ticket = Ticket.objects.create(
+                    reservation=reservation,
+                    ticket_type=reservation.ticket_type  # 👈 important
+                )
                 ticket.qr_code.save(f"qr_{ticket.id}.png", generate_qr_code(ticket))
                 ticket.save()
                 logger.warning(f"[WEBHOOK ORANGE] 📧 Envoi de l'email pour ticket {ticket.id}")
-                send_ticket_email(ticket)  # Envoi automatique du mail avec ticket en pièce jointe
             logger.warning(f"[WEBHOOK ORANGE] ✅ Paiement confirmé pour la réservation {reservation.id}")
             return JsonResponse({'status': 'updated'}, status=200)
         except Reservation.DoesNotExist:
@@ -226,10 +228,12 @@ def wave_webhook(request):
             reservation.save()
 
             for _ in range(reservation.quantity):
-                ticket = Ticket.objects.create(reservation=reservation)
+                ticket = Ticket.objects.create(
+                    reservation=reservation,
+                    ticket_type=reservation.ticket_type  # 👈 important
+                )
                 ticket.qr_code.save(f"qr_{ticket.id}.png", generate_qr_code(ticket))
                 ticket.save()
-                send_ticket_email(ticket)
             return JsonResponse({'status': 'updated'}, status=200)
         except Reservation.DoesNotExist:
             return JsonResponse({'error': 'Reservation not found'}, status=404)
