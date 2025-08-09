@@ -1,18 +1,28 @@
 import pdfkit
 import base64
 import os
+import requests
 from django.conf import settings
 from django.template.loader import render_to_string
+from cloudinary.utils import cloudinary_url
 
 
 def generate_ticket_pdf(ticket, request):
     """
-    Génère un PDF de ticket avec wkhtmltopdf (pdfkit) en utilisant les fichiers locaux.
-    Compatible Docker/Linux.
+    Génère un PDF de ticket avec pdfkit + wkhtmltopdf en utilisant Cloudinary pour le QR code.
+    Compatible production (pas besoin de fichier local).
     """
-    # 1. Encoder le QR code en base64 (chemin local)
-    with open(ticket.qr_code.path, "rb") as image_file:
-        qr_base64 = base64.b64encode(image_file.read()).decode()
+    # 1. Récupérer l'URL du QR code depuis Cloudinary
+    try:
+        public_id = str(ticket.qr_code)  # ex: 'myfolder/qrcode_123'
+        qr_url, _ = cloudinary_url(public_id)
+
+        response = requests.get(qr_url)
+        response.raise_for_status()
+
+        qr_base64 = base64.b64encode(response.content).decode()
+    except Exception as e:
+        raise Exception(f"Impossible de récupérer le QR code depuis Cloudinary : {str(e)}")
 
     # 2. Rendre le template HTML
     html_string = render_to_string('tickets/ticket_pdf.html', {
@@ -43,7 +53,7 @@ def generate_ticket_pdf(ticket, request):
     try:
         pdf = pdfkit.from_string(
             html_string,
-            False,  # Retourner en mémoire
+            False,
             options=options,
             configuration=config
         )
