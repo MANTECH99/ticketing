@@ -357,3 +357,21 @@ def envoyer_tickets_email(request, reservation_id):
         messages.error(request, f"Une erreur est survenue lors de l'envoi des tickets: {str(e)}")
 
     return redirect('confirmation_reservation', reservation.id)
+
+import pdfkit
+from django.http import HttpResponse
+
+def test_wkhtml(request):
+    # Contenu HTML simple
+    html_content = "<h1>Test wkhtmltopdf</h1><p>Si tu vois ça en PDF, ça marche !</p>"
+
+    try:
+        # Générer PDF à partir du HTML
+        pdf = pdfkit.from_string(html_content, False)
+    except OSError as e:
+        return HttpResponse(f"Erreur wkhtmltopdf : {e}")
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="test_wkhtml.pdf"'
+    return response
+
