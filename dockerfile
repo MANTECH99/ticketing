@@ -26,4 +26,4 @@ RUN python -m venv /opt/venv && . /opt/venv/bin/activate && pip install --upgrad
 COPY . .
 
 # Commande pour lancer l'application avec Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "baol_distributions.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "ticketing.wsgi:application"]
