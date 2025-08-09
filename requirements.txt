@@ -16,6 +16,7 @@ qrcode
 cloudinary
 django-cloudinary-storage
 requests>=2.0
+pdfkit
 
 
 
