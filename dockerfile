@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     fontconfig \
     wkhtmltopdf \
+    libxrender1 \
+    libfontconfig1 \
+    libxext6 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copier le fichier requirements.txt et installer les dépendances Python
