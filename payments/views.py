@@ -32,9 +32,9 @@ def process_orange_payment(request, reservation_id):
             "serviceCode": "OM_SN_CASHOUT",
             "amount": int(reservation.total_price()),
             "number": phone,
-            "callBackURL": f"https://19dacf9b9c22.ngrok-free.app/webhook/orange/",
-            "successUrl": f"https://19dacf9b9c22.ngrok-free.app/events/confirmation/{reservation.id}/",
-            "failureUrl": f"https://19dacf9b9c22.ngrok-free.app/events/echec/{reservation.id}/",
+            "callBackURL": f"https://ticketing-production-20dc.up.railway.app/webhook/orange/",
+            "successUrl": f"https://ticketing-production-20dc.up.railway.app/events/confirmation/{reservation.id}/",
+            "failureUrl": f"https://ticketing-production-20dc.up.railway.app/events/echec/{reservation.id}/",
 
         }
 
@@ -154,9 +154,9 @@ def process_wave_payment(request, reservation_id):
             "serviceCode": "WAVE_SN_CASHOUT",  # ⚠️ à confirmer selon DExchange
             "amount": int(reservation.total_price()),
             "number": phone,
-            "callBackURL": f"https://19dacf9b9c22.ngrok-free.app/webhook/orange/",
-            "successUrl": f"https://19dacf9b9c22.ngrok-free.app/events/confirmation/{reservation.id}/",
-            "failureUrl": f"https://19dacf9b9c22.ngrok-free.app/events/echec/{reservation.id}/",
+            "callBackURL": f"https://ticketing-production-20dc.up.railway.app/webhook/orange/",
+            "successUrl": f"https://ticketing-production-20dc.up.railway.app/events/confirmation/{reservation.id}/",
+            "failureUrl": f"https://ticketing-production-20dc.up.railway.app/events/echec/{reservation.id}/",
 
         }
 
